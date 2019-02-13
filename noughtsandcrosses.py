@@ -132,12 +132,12 @@ def zero_players_turn(player, letter, board):
     print(player + "'s turn")
     if 'Player' in player:
         draw_board(board)
-        move = get_player_move(THE_BOARD)
+        move = get_player_move(board)
     else:
         move = get_computer_move(board, letter)
     make_move(board, letter, move)
     if is_winner(board, letter):
-        print(player +' has won!')
+        print(player + ' has won!')
         return False
     if is_board_full(board):
         print('The game is a tie!')
