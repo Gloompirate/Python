@@ -131,8 +131,14 @@ print("Welcome")
 while True:
     # Reset the board.
     THE_BOARD = [' '] * 10
-    PLAYER_LETTER, COMPUTER_LETTER = input_player_letter()
-    TURN = who_goes_first()
+    NUMBER_OF_PLAYERS = get_number_of_players()
+    if NUMBER_OF_PLAYERS == 0:
+        COMPUTER_ONE_LETTER, COMPUTER_TWO_LETTER = ['X', 'O']
+    if NUMBER_OF_PLAYERS == 1:
+        PLAYER_ONE_LETTER, COMPUTER_ONE_LETTER = input_player_letter()
+    if NUMBER_OF_PLAYERS == 0:
+        PLAYER_ONE_LETTER, PLAYER_TWO_LETTER = ['X', 'O']
+    TURN = who_goes_first(NUMBER_OF_PLAYERS)
     print('The ' + TURN + ' will go first.')
     GAME_IS_PLAYING = True
     while GAME_IS_PLAYING:
@@ -140,8 +146,8 @@ while True:
             # Player's turn
             draw_board(THE_BOARD)
             MOVE = get_player_move(THE_BOARD)
-            make_move(THE_BOARD, PLAYER_LETTER, MOVE)
-            if is_winner(THE_BOARD, PLAYER_LETTER):
+            make_move(THE_BOARD, PLAYER_ONE_LETTER, MOVE)
+            if is_winner(THE_BOARD, PLAYER_ONE_LETTER):
                 draw_board(THE_BOARD)
                 print('Hooray! You have won the game!')
                 GAME_IS_PLAYING = False
@@ -152,11 +158,11 @@ while True:
                     break
                 else:
                     TURN = 'computer'
-        else:
+        if TURN == 'computer':
             # Computer's turn
-            MOVE = get_computer_move(THE_BOARD, COMPUTER_LETTER)
-            make_move(THE_BOARD, COMPUTER_LETTER, MOVE)
-            if is_winner(THE_BOARD, COMPUTER_LETTER):
+            MOVE = get_computer_move(THE_BOARD, COMPUTER_ONE_LETTER)
+            make_move(THE_BOARD, COMPUTER_ONE_LETTER, MOVE)
+            if is_winner(THE_BOARD, COMPUTER_ONE_LETTER):
                 draw_board(THE_BOARD)
                 print('The computer has beaten you! You lose.')
                 GAME_IS_PLAYING = False
