@@ -45,9 +45,7 @@ def is_winner(board, letter):
 
 def get_board_copy(board):
     """Make a copy of the board list and return it."""
-    board_copy = []
-    for i in board:
-        board_copy.append(i)
+    board_copy = board.copy()
     return board_copy
 
 def is_space_free(board, move):
