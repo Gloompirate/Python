@@ -135,14 +135,12 @@ def zero_players_turn(player, letter, board):
     draw_board(board)
     if is_winner(board, letter):
         print('Computer ' + str(player) +' has won!')
-        return (False, None)
+        return False
     if is_board_full(board):
         print('The game is a tie!')
-        return (False, None)
+        return False
     time.sleep(0.2)
-    if player == 1:
-        return (True, 'computer 2')
-    return (True, 'computer 1')
+    return True
 
 print("Welcome")
 
@@ -227,10 +225,12 @@ while True:
                     TURN = 'player 1'
         if TURN == 'computer 1':
             # Computer's turn this only happens in 0 player games
-            GAME_IS_PLAYING, TURN = zero_players_turn(1, COMPUTER_ONE_LETTER, THE_BOARD)
+            GAME_IS_PLAYING = zero_players_turn(1, COMPUTER_ONE_LETTER, THE_BOARD)
+            TURN = 'computer 2'
         if TURN == 'computer 2':
             # Computer's turn this only happens in 0 player games
-            GAME_IS_PLAYING, TURN = zero_players_turn(2, COMPUTER_TWO_LETTER, THE_BOARD)
+            GAME_IS_PLAYING = zero_players_turn(2, COMPUTER_TWO_LETTER, THE_BOARD)
+            TURN = 'computer 1'
     ANSWER = ''
     while ANSWER not in ('YES', 'NO', 'Y', 'N'):
         print('Do you want to play again? (yes or no)')
