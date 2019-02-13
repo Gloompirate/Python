@@ -136,7 +136,7 @@ while True:
         COMPUTER_ONE_LETTER, COMPUTER_TWO_LETTER = ['X', 'O']
     if NUMBER_OF_PLAYERS == 1:
         PLAYER_ONE_LETTER, COMPUTER_ONE_LETTER = input_player_letter()
-    if NUMBER_OF_PLAYERS == 0:
+    if NUMBER_OF_PLAYERS == 2:
         PLAYER_ONE_LETTER, PLAYER_TWO_LETTER = ['X', 'O']
     TURN = who_goes_first(NUMBER_OF_PLAYERS)
     print('The ' + TURN + ' will go first.')
@@ -173,7 +173,40 @@ while True:
                     break
                 else:
                     TURN = 'player'
+        if TURN == 'player 1':
+            # Player 1's turn, this only happens in two player games
+            draw_board(THE_BOARD)
+            MOVE = get_player_move(THE_BOARD)
+            make_move(THE_BOARD, PLAYER_ONE_LETTER, MOVE)
+            if is_winner(THE_BOARD, PLAYER_ONE_LETTER):
+                draw_board(THE_BOARD)
+                print('Hooray! Player 1 has won the game!')
+                GAME_IS_PLAYING = False
+            else:
+                if is_board_full(THE_BOARD):
+                    draw_board(THE_BOARD)
+                    print('The game is a tie!')
+                    break
+                else:
+                    TURN = 'player 2'
+        if TURN == 'player 2':
+            # Player 2's turn, this only happens in two player games
+            draw_board(THE_BOARD)
+            MOVE = get_player_move(THE_BOARD)
+            make_move(THE_BOARD, PLAYER_TWO_LETTER, MOVE)
+            if is_winner(THE_BOARD, PLAYER_TWO_LETTER):
+                draw_board(THE_BOARD)
+                print('Hooray! Player 2 has won the game!')
+                GAME_IS_PLAYING = False
+            else:
+                if is_board_full(THE_BOARD):
+                    draw_board(THE_BOARD)
+                    print('The game is a tie!')
+                    break
+                else:
+                    TURN = 'player 1'
     ANSWER = ''
+    #BUG: typing no here doesn't exit the game
     while ANSWER not in ('YES', 'No', 'Y', 'N'):
         print('Do you want to play again? (yes or no)')
         ANSWER = input().upper()
