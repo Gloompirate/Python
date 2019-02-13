@@ -70,10 +70,9 @@ def choose_random_move_from_list(board, moves_list):
     for i in moves_list:
         if is_space_free(board, i):
             possible_moves.append(i)
-    if len(possible_moves) != 0:
+    if possible_moves:
         return random.choice(possible_moves)
-    else:
-        return None
+    return None
 
 def get_computer_move(board, computer_letter):
     """Given a board and the computer's letter, determine where to move and return that move."""
