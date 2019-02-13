@@ -127,6 +127,23 @@ def is_board_full(board):
             return False
     return True
 
+def zero_players_turn(player, letter, board):
+    """Used for player moves with only computer players"""
+    print("Computer "+ player + "'s turn")
+    move = get_computer_move(board, letter)
+    make_move(board, letter, move)
+    draw_board(board)
+    if is_winner(board, letter):
+        print('Computer 1 has won!')
+        return (False, None)
+    if is_board_full(board):
+        print('The game is a tie!')
+        return (False, None)
+    time.sleep(0.2)
+    if player == 1:
+        return (True, 2)
+    return (True, 1)
+
 print("Welcome")
 
 while True:
