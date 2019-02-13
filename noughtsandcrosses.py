@@ -176,6 +176,7 @@ while True:
                     TURN = 'player'
         if TURN == 'player 1':
             # Player 1's turn, this only happens in two player games
+            print("Player 1's turn:")
             draw_board(THE_BOARD)
             MOVE = get_player_move(THE_BOARD)
             make_move(THE_BOARD, PLAYER_ONE_LETTER, MOVE)
@@ -192,6 +193,7 @@ while True:
                     TURN = 'player 2'
         if TURN == 'player 2':
             # Player 2's turn, this only happens in two player games
+            print("Player 2's turn:")
             draw_board(THE_BOARD)
             MOVE = get_player_move(THE_BOARD)
             make_move(THE_BOARD, PLAYER_TWO_LETTER, MOVE)
@@ -208,17 +210,15 @@ while True:
                     TURN = 'player 1'
         if TURN == 'computer 1':
             # Computer's turn this only happens in 0 player games
-            draw_board(THE_BOARD)
             print("Computer 1's turn:")
             MOVE = get_computer_move(THE_BOARD, COMPUTER_ONE_LETTER)
             make_move(THE_BOARD, COMPUTER_ONE_LETTER, MOVE)
+            draw_board(THE_BOARD)
             if is_winner(THE_BOARD, COMPUTER_ONE_LETTER):
-                draw_board(THE_BOARD)
                 print('Computer 1 has won!')
                 GAME_IS_PLAYING = False
             else:
                 if is_board_full(THE_BOARD):
-                    draw_board(THE_BOARD)
                     print('The game is a tie!')
                     break
                 else:
@@ -226,17 +226,15 @@ while True:
                     TURN = 'computer 2'
         if TURN == 'computer 2':
             # Computer's turn this only happens in 0 player games
-            draw_board(THE_BOARD)
             print("Computer 2's turn:")
             MOVE = get_computer_move(THE_BOARD, COMPUTER_TWO_LETTER)
             make_move(THE_BOARD, COMPUTER_TWO_LETTER, MOVE)
+            draw_board(THE_BOARD)
             if is_winner(THE_BOARD, COMPUTER_TWO_LETTER):
-                draw_board(THE_BOARD)
                 print('Computer 2 has won!')
                 GAME_IS_PLAYING = False
             else:
                 if is_board_full(THE_BOARD):
-                    draw_board(THE_BOARD)
                     print('The game is a tie!')
                     break
                 else:
