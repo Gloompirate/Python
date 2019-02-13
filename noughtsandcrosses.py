@@ -129,12 +129,15 @@ def is_board_full(board):
 
 def zero_players_turn(player, letter, board):
     """Used for player moves with only computer players"""
-    print("Computer "+ str(player) + "'s turn")
-    move = get_computer_move(board, letter)
+    print(player + "'s turn")
+    if 'Player' in player:
+        draw_board(board)
+        move = get_player_move(THE_BOARD)
+    else:
+        move = get_computer_move(board, letter)
     make_move(board, letter, move)
-    draw_board(board)
     if is_winner(board, letter):
-        print('Computer ' + str(player) +' has won!')
+        print(player +' has won!')
         return False
     if is_board_full(board):
         print('The game is a tie!')
@@ -160,35 +163,12 @@ while True:
     while GAME_IS_PLAYING:
         if TURN == 'player':
             # Player's turn
-            draw_board(THE_BOARD)
-            MOVE = get_player_move(THE_BOARD)
-            make_move(THE_BOARD, PLAYER_ONE_LETTER, MOVE)
-            if is_winner(THE_BOARD, PLAYER_ONE_LETTER):
-                draw_board(THE_BOARD)
-                print('Hooray! You have won the game!')
-                GAME_IS_PLAYING = False
-            else:
-                if is_board_full(THE_BOARD):
-                    draw_board(THE_BOARD)
-                    print('The game is a tie!')
-                    break
-                else:
-                    TURN = 'computer'
+            GAME_IS_PLAYING = zero_players_turn('Player', PLAYER_ONE_LETTER, THE_BOARD)
+            TURN = 'computer'
         if TURN == 'computer':
             # Computer's turn
-            MOVE = get_computer_move(THE_BOARD, COMPUTER_ONE_LETTER)
-            make_move(THE_BOARD, COMPUTER_ONE_LETTER, MOVE)
-            if is_winner(THE_BOARD, COMPUTER_ONE_LETTER):
-                draw_board(THE_BOARD)
-                print('The computer has beaten you! You lose.')
-                GAME_IS_PLAYING = False
-            else:
-                if is_board_full(THE_BOARD):
-                    draw_board(THE_BOARD)
-                    print('The game is a tie!')
-                    break
-                else:
-                    TURN = 'player'
+            GAME_IS_PLAYING = zero_players_turn('Computer', COMPUTER_ONE_LETTER, THE_BOARD)
+            TURN = 'player'
         if TURN == 'player 1':
             # Player 1's turn, this only happens in two player games
             print("Player 1's turn:")
@@ -225,11 +205,11 @@ while True:
                     TURN = 'player 1'
         if TURN == 'computer 1':
             # Computer's turn this only happens in 0 player games
-            GAME_IS_PLAYING = zero_players_turn(1, COMPUTER_ONE_LETTER, THE_BOARD)
+            GAME_IS_PLAYING = zero_players_turn('Computer 1', COMPUTER_ONE_LETTER, THE_BOARD)
             TURN = 'computer 2'
         if TURN == 'computer 2':
             # Computer's turn this only happens in 0 player games
-            GAME_IS_PLAYING = zero_players_turn(2, COMPUTER_TWO_LETTER, THE_BOARD)
+            GAME_IS_PLAYING = zero_players_turn('Computer 2', COMPUTER_TWO_LETTER, THE_BOARD)
             TURN = 'computer 1'
     ANSWER = ''
     while ANSWER not in ('YES', 'NO', 'Y', 'N'):
