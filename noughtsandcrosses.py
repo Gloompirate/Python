@@ -150,6 +150,9 @@ while True:
                     break
                 else:
                     TURN = 'player'
-    print('Do you want to play again? (yes or no)')
-    if not input().lower().startswith('y'):
+    ANSWER = ''
+    while ANSWER not in ('YES', 'No', 'Y', 'N'):
+        print('Do you want to play again? (yes or no)')
+        ANSWER = input().upper()
+    if ANSWER.startswith('N'):
         break
