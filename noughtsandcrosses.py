@@ -17,11 +17,10 @@ def input_player_letter():
     while letter not in ('X', 'O'):
         print('Do you want to be X or O?')
         letter = input().upper()
-        # The first element in the list is the player's letter; the second is the computer's letter.
-        if letter == 'X':
-            return ['X', 'O']
-        else:
-            return ['O', 'X']
+    # The first element in the list is the player's letter; the second is the computer's letter.
+    if letter == 'X':
+        return ['X', 'O']
+    return ['O', 'X']
 
 def who_goes_first():
     """Randomly choose which player goes first."""
