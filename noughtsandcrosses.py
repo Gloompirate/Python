@@ -22,6 +22,15 @@ def input_player_letter():
         return ['X', 'O']
     return ['O', 'X']
 
+def get_number_of_players():
+    """Asks the user how many players there are, 0 is computer vs computer,
+    1 is player vs computer, 2 is player vs player."""
+    number = 4
+    while number not in range(3):
+        print('Enter number of players (0,1,2)')
+        number = int(input())
+    return number
+
 def who_goes_first():
     """Randomly choose which player goes first."""
     if random.randint(0, 1) == 0:
