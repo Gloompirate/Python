@@ -31,11 +31,19 @@ def get_number_of_players():
         number = int(input())
     return number
 
-def who_goes_first():
+def who_goes_first(number_of_players):
     """Randomly choose which player goes first."""
+    if number_of_players == 0:
+        if random.randint(0, 1) == 0:
+            return 'computer 1'
+        return 'computer 2'
+    if number_of_players == 1:
+        if random.randint(0, 1) == 0:
+            return 'computer'
+        return 'player'
     if random.randint(0, 1) == 0:
-        return 'computer'
-    return 'player'
+        return 'player 1'
+    return 'player 2'
 
 def make_move(board, letter, move):
     """Updates the board with the provided move."""
