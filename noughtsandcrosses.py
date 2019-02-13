@@ -1,6 +1,7 @@
 """Noughts and Crosses.py"""
 
 import random
+import time
 
 def draw_board(board):
     """Prints out the current board, ignores index 0."""
@@ -207,11 +208,13 @@ while True:
                     TURN = 'player 1'
         if TURN == 'computer 1':
             # Computer's turn this only happens in 0 player games
+            draw_board(THE_BOARD)
+            print("Computer 1's turn:")
             MOVE = get_computer_move(THE_BOARD, COMPUTER_ONE_LETTER)
             make_move(THE_BOARD, COMPUTER_ONE_LETTER, MOVE)
             if is_winner(THE_BOARD, COMPUTER_ONE_LETTER):
                 draw_board(THE_BOARD)
-                print('Computer 2 has beaten you! You lose.')
+                print('Computer 1 has won!')
                 GAME_IS_PLAYING = False
             else:
                 if is_board_full(THE_BOARD):
@@ -219,14 +222,17 @@ while True:
                     print('The game is a tie!')
                     break
                 else:
+                    time.sleep(0.2)
                     TURN = 'computer 2'
         if TURN == 'computer 2':
             # Computer's turn this only happens in 0 player games
+            draw_board(THE_BOARD)
+            print("Computer 2's turn:")
             MOVE = get_computer_move(THE_BOARD, COMPUTER_TWO_LETTER)
             make_move(THE_BOARD, COMPUTER_TWO_LETTER, MOVE)
             if is_winner(THE_BOARD, COMPUTER_TWO_LETTER):
                 draw_board(THE_BOARD)
-                print('Computer 1 has beaten you! You lose.')
+                print('Computer 2 has won!')
                 GAME_IS_PLAYING = False
             else:
                 if is_board_full(THE_BOARD):
@@ -234,10 +240,10 @@ while True:
                     print('The game is a tie!')
                     break
                 else:
+                    time.sleep(0.2)
                     TURN = 'computer 1'
     ANSWER = ''
-    #BUG: typing no here doesn't exit the game
-    while ANSWER not in ('YES', 'No', 'Y', 'N'):
+    while ANSWER not in ('YES', 'NO', 'Y', 'N'):
         print('Do you want to play again? (yes or no)')
         ANSWER = input().upper()
     if ANSWER.startswith('N'):
