@@ -57,7 +57,7 @@ def displayBoard(missedLetters, correctLetters, secretWord):
             blanks = blanks[:i] + secretWord[i] + blanks[i+1:]
     for letter in blanks: # Show the secret word with spaces in between the letter.
         print(letter, end=' ')
-        print()
+    print()
 
 def getGuess(alreadyGuessed):
     # Returns the letter the player entered. This function makes sure the player entered a single letter and not something else.
