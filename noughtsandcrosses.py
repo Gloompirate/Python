@@ -1,4 +1,4 @@
-"""Noughts and Crosses.py"""
+"""noughtsandcrosses.py"""
 
 import random
 import time
@@ -51,7 +51,7 @@ def make_move(board, letter, move):
     board[move] = letter
 
 def is_winner(board, letter):
-    """Given a board and a player's letter, this function returns True if thatplayer has won."""
+    """Given a board and a player's letter, this function returns True if that player has won."""
     return ((board[7] == letter and board[8] == letter and board[9] == letter) or # Across the top
             (board[4] == letter and board[5] == letter and board[6] == letter) or # Across middle
             (board[1] == letter and board[2] == letter and board[3] == letter) or # Across bottom
@@ -73,7 +73,7 @@ def is_space_free(board, move):
 def get_player_move(board):
     """Let the player enter their move."""
     move = 0
-    while move not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or not is_space_free(board, move):
+    while move not in range(1, 10) or not is_space_free(board, move):
         print('What is your next move? (1-9)')
         move = int(input())
     return move
@@ -128,7 +128,7 @@ def is_board_full(board):
     return True
 
 def do_turn(player, letter, board):
-    """Used for player moves with only computer players"""
+    """Return True is the games continues, return False if it has ended"""
     print(player + "'s turn")
     if player[:1] == 'P':
         move = get_player_move(board)
