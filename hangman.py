@@ -54,15 +54,14 @@ def display_board(missed_letters, correct_letters, secret_word):
             blanks = blanks[:i] + secret_word[i] + blanks[i+1:]
     print(' '.join(blanks))
 
-def getGuess(alreadyGuessed):
-    # Returns the letter the player entered. This function makes sure the player entered a single letter and not something else.
+def get_guess(already_guessed):
+    """ Returns the letter the player entered, makes sure the player entered a single letter and not something else."""
     while True:
         print('Guess a letter:')
-        guess = input()
-        guess = guess.lower()
+        guess = input().lower()
         if len(guess) != 1:
             print('Please enter a single letter.')
-        elif guess in alreadyGuessed:
+        elif guess in already_guessed:
             print('You have already guessed that letter. Choose again.')
         elif guess not in 'abcdefghijklmnopqrstuvwxyz':
             print('Please enter a LETTER.')
@@ -84,7 +83,7 @@ gameIsDone = False
 while True:
     display_board(missedLetters, correctLetters, secretWord)
     # Let the player enter a letter.
-    guess = getGuess(missedLetters + correctLetters)
+    guess = get_guess(missedLetters + correctLetters)
     if guess in secretWord:
         correctLetters = correctLetters + guess
         # Check if the player has won.
