@@ -130,12 +130,12 @@ def is_board_full(board):
 def zero_players_turn(player, letter, board):
     """Used for player moves with only computer players"""
     print(player + "'s turn")
-    if 'Player' in player:
-        draw_board(board)
+    if player[:1] == 'P':
         move = get_player_move(board)
     else:
         move = get_computer_move(board, letter)
     make_move(board, letter, move)
+    draw_board(board)
     if is_winner(board, letter):
         print(player + ' has won!')
         return False
@@ -160,14 +160,19 @@ while True:
     TURN = who_goes_first(NUMBER_OF_PLAYERS)
     print('The ' + TURN + ' will go first.')
     GAME_IS_PLAYING = True
+    draw_board(THE_BOARD)
     while GAME_IS_PLAYING:
         if TURN == 'player':
             # Player's turn
             GAME_IS_PLAYING = zero_players_turn('Player', PLAYER_ONE_LETTER, THE_BOARD)
+            if not GAME_IS_PLAYING:
+                break
             TURN = 'computer'
         if TURN == 'computer':
             # Computer's turn
             GAME_IS_PLAYING = zero_players_turn('Computer', COMPUTER_ONE_LETTER, THE_BOARD)
+            if not GAME_IS_PLAYING:
+                break
             TURN = 'player'
         if TURN == 'player 1':
             # Player 1's turn, this only happens in two player games
@@ -206,10 +211,14 @@ while True:
         if TURN == 'computer 1':
             # Computer's turn this only happens in 0 player games
             GAME_IS_PLAYING = zero_players_turn('Computer 1', COMPUTER_ONE_LETTER, THE_BOARD)
+            if not GAME_IS_PLAYING:
+                break
             TURN = 'computer 2'
         if TURN == 'computer 2':
             # Computer's turn this only happens in 0 player games
             GAME_IS_PLAYING = zero_players_turn('Computer 2', COMPUTER_TWO_LETTER, THE_BOARD)
+            if not GAME_IS_PLAYING:
+                break
             TURN = 'computer 1'
     ANSWER = ''
     while ANSWER not in ('YES', 'NO', 'Y', 'N'):
