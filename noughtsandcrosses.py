@@ -52,14 +52,12 @@ def make_move(board, letter, move):
 
 def is_winner(board, letter):
     """Given a board and a player's letter, this function returns True if that player has won."""
-    return ((board[7] == letter and board[8] == letter and board[9] == letter) or # Across the top
-            (board[4] == letter and board[5] == letter and board[6] == letter) or # Across middle
-            (board[1] == letter and board[2] == letter and board[3] == letter) or # Across bottom
-            (board[7] == letter and board[4] == letter and board[1] == letter) or # Down the left
-            (board[8] == letter and board[5] == letter and board[2] == letter) or # Down the middle
-            (board[9] == letter and board[6] == letter and board[3] == letter) or # Down the right
-            (board[7] == letter and board[5] == letter and board[3] == letter) or # Diagonal
-            (board[9] == letter and board[5] == letter and board[1] == letter)) # Diagonal
+    winning_positions = [[7, 8, 9], [4, 5, 6], [1, 2, 3], [7, 4, 1],
+                         [8, 5, 2], [9, 6, 3], [7, 5, 3], [9, 5, 1]]
+    for position in winning_positions:
+        if board[position[0]] == letter and board[position[1]] == letter and board[position[2]] == letter:
+            return True
+    return False
 
 def get_board_copy(board):
     """Make a copy of the board list and return it."""
