@@ -40,7 +40,12 @@ HANGMAN_PICS = ['''
  / \  |
      ===''']
 
-WORD_LIST = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split()
+# WORD_LIST = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split()
+try:
+    file = open("wordlist.txt", "r")
+    WORD_LIST = [line.rstrip('\n') for line in file]
+finally:
+    file.close()
 
 
 def get_random_word():
@@ -155,7 +160,7 @@ def get_computer_guess(missed, correct, blanks, words):
 
 
 print('H A N G M A N')
-
+dictionary = make_dictionary()
 while True:
     missed_letters = ''
     correct_letters = ''
@@ -163,7 +168,6 @@ while True:
     blanks = '_' * len(secret_word)
     number_of_players = get_number_of_players()
     if not number_of_players:
-        dictionary = make_dictionary()
         words_left = dictionary[len(secret_word)]
     game_is_playing = True
     while game_is_playing:
