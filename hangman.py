@@ -40,7 +40,7 @@ HANGMAN_PICS = ['''
  / \  |
      ===''']
 
-# WORD_LIST = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split()
+# open the file containing the words and read it into WORD_LIST
 try:
     file = open("wordlist.txt", "r")
     WORD_LIST = [line.rstrip('\n') for line in file]
@@ -54,7 +54,7 @@ def get_random_word():
 
 
 def display_board(missed_letters, correct_letters, secret_word, blanks):
-    """Displays the current gameboard."""
+    """Displays the current gameboard. Returns the current state of play."""
     print(HANGMAN_PICS[len(missed_letters)])
     print('\nMissed letters: ' + ' '.join(missed_letters))
     # blanks = '_' * len(secret_word)
@@ -81,15 +81,14 @@ def get_player_guess(already_guessed):
 
 
 def playAgain():
-    # This function returns True if the player wants to play again; otherwise, it returns False.
+    """This function returns True if the player wants to play again; otherwise, it returns False."""
     print('Do you want to play again? (yes or no)')
     return input().lower().startswith('y')
 
 
 def get_number_of_players():
-    """Asks the user how many players there are, 0 is computer vs computer,
-    1 is player vs computer, 2 is player vs player."""
-    number = 4
+    """Asks the user how many players there are, 0 is computer vs computer,1 is player vs computer."""
+    number = 3
     while number not in range(2):
         print('Enter number of players (0,1)')
         number = int(input())
@@ -97,6 +96,7 @@ def get_number_of_players():
 
 
 def make_dictionary():
+    """Create a dictionary with the key are the word length and the value as a list of all words of that length."""
     dictionary = {}
     for word in WORD_LIST:
         if len(word) not in dictionary:
@@ -108,7 +108,7 @@ def make_dictionary():
 
 def frequency_analysis(word_list):
     """Find how often each letter is used in the word_list provided,
-    and return a list of letters ordered by frequency decending"""
+    and return a list of letters ordered by frequency decending."""
     frequency = {}
     for word in word_list:
         for letter in word:
@@ -120,6 +120,7 @@ def frequency_analysis(word_list):
 
 
 def remove_words_by_letter(letter, word_list):
+    """Remove any words from the word list that don't contain the provided letter."""
     words_to_remove = []
     for word in word_list:
         if letter in word:
@@ -128,6 +129,7 @@ def remove_words_by_letter(letter, word_list):
 
 
 def make_sequence(letters):
+    """From the provided game state make a dictionary with the key as the letter position and the value as the letter."""
     sequence = {}
     for position, letter in enumerate(letters):
         if letter != '_':
@@ -147,35 +149,77 @@ def remove_words_by_sequence(sequence, word_list):
 
 
 def get_computer_guess(missed, correct, blanks, words):
+    """The computer takes a guess by removing all known incorrect words, and then choosing the
+    most common letter left in all possible words remaining."""
+    # If the letter is not in the word, remove all words containing that letter
     for letter in missed:
         words = remove_words_by_letter(letter, words)
     sequence = make_sequence(blanks)
+    # Remove any words that don't have known letters at the correct positions
     words = remove_words_by_sequence(sequence, words)
+    # Order all the letters in the remaining words by frequency, then remove any letters already tried
     freq = frequency_analysis(words)
     for character in (missed + correct):
         if character in freq:
             freq.remove(character)
     time.sleep(1)
+    # return the next letter to try
     return freq[0]
+
+
+def ask_for_custom_word():
+    """This will ask the user if they want to enter their own word instead of using a random one."""
+    answer = ''
+    while answer not in ('YES', 'NO', 'Y', 'N'):
+        print('Do you want to enter a custom word? (yes or no)')
+        answer = input().upper()
+    if answer.startswith('N'):
+        return False
+    else:
+        return True
+
+
+def get_custom_word():
+    """Get the custom word the user wants to use and check it is a string."""
+    answer = ''
+    while answer == '':
+        print('Enter the custom word:')
+        answer = input().lower()
+        for letter in answer:
+            if letter not in "abcdefghijklmnopqrstuvwxyz":
+                answer = ''
+                break
+    return answer
 
 
 print('H A N G M A N')
 dictionary = make_dictionary()
 while True:
-    missed_letters = ''
-    correct_letters = ''
-    secret_word = get_random_word()
-    blanks = '_' * len(secret_word)
     number_of_players = get_number_of_players()
     if not number_of_players:
+        # custom_word_wanted = ask_for_custom_word()
+        if ask_for_custom_word():
+            custom_word = get_custom_word()
+            words_left = dictionary[len(custom_word)]
+            if custom_word not in words_left:
+                words_left.append(custom_word)
+            secret_word = custom_word
+        else:
+            secret_word = get_random_word()
+            words_left = dictionary[len(secret_word)]
+    else:
+        secret_word = get_random_word()
         words_left = dictionary[len(secret_word)]
+    missed_letters = ''
+    correct_letters = ''
+    blanks = '_' * len(secret_word)
     game_is_playing = True
     while game_is_playing:
         blanks = display_board(missed_letters, correct_letters, secret_word, blanks)
         # Let the player enter a letter.
         if number_of_players:
             guess = get_player_guess(missed_letters + correct_letters)
-        else:  # This should be changed for the computer player once the code is written
+        else:  # The computer player guesses a letter
             guess = get_computer_guess(missed_letters, correct_letters, blanks, words_left)
         if guess in secret_word:
             correct_letters += guess
