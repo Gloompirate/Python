@@ -47,15 +47,16 @@ def get_random_word():
     return random.choice(WORD_LIST)
 
 
-def display_board(missed_letters, correct_letters, secret_word):
+def display_board(missed_letters, correct_letters, secret_word, blanks):
     """Displays the current gameboard."""
     print(HANGMAN_PICS[len(missed_letters)])
     print('\nMissed letters: ' + ' '.join(missed_letters))
-    blanks = '_' * len(secret_word)
+    # blanks = '_' * len(secret_word)
     for i in range(len(secret_word)):  # Replace blanks with correctly guessed letters.
         if secret_word[i] in correct_letters:
             blanks = blanks[:i] + secret_word[i] + blanks[i + 1:]
     print(' '.join(blanks))
+    return blanks
 
 
 def get_player_guess(already_guessed):
@@ -89,22 +90,17 @@ def get_number_of_players():
     return number
 
 
-def setup_computer_player():
-    """This sets up the variables needed for the computer player"""
-
-
 print('H A N G M A N')
 
 while True:
     missed_letters = ''
     correct_letters = ''
     secret_word = get_random_word()
+    blanks = '_' * len(secret_word)
     number_of_players = get_number_of_players()
-    if not number_of_players:
-        setup_computer_player()
     game_is_playing = True
     while game_is_playing:
-        display_board(missed_letters, correct_letters, secret_word)
+        blanks = display_board(missed_letters, correct_letters, secret_word, blanks)
         # Let the player enter a letter.
         if number_of_players:
             guess = get_player_guess(missed_letters + correct_letters)
@@ -125,7 +121,7 @@ while True:
             missed_letters += guess
             # Check if player has guessed too many times and lost.
             if len(missed_letters) == len(HANGMAN_PICS) - 1:
-                display_board(missed_letters, correct_letters, secret_word)
+                blanks = display_board(missed_letters, correct_letters, secret_word, blanks)
                 print('You have run out of guesses, the word was: ' + secret_word)
                 game_is_playing = False
     # Ask the player if they want to play again (but only if the game is over)
