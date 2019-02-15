@@ -58,7 +58,7 @@ def display_board(missed_letters, correct_letters, secret_word):
     print(' '.join(blanks))
 
 
-def get_guess(already_guessed):
+def get_player_guess(already_guessed):
     """ Returns the letter the player entered, makes sure the player entered a single letter and not something else."""
     while True:
         print('Guess a letter:')
@@ -79,17 +79,37 @@ def playAgain():
     return input().lower().startswith('y')
 
 
+def get_number_of_players():
+    """Asks the user how many players there are, 0 is computer vs computer,
+    1 is player vs computer, 2 is player vs player."""
+    number = 4
+    while number not in range(2):
+        print('Enter number of players (0,1)')
+        number = int(input())
+    return number
+
+
+def setup_computer_player():
+    """This sets up the variables needed for the computer player"""
+
+
 print('H A N G M A N')
 
 while True:
     missed_letters = ''
     correct_letters = ''
     secret_word = get_random_word()
+    number_of_players = get_number_of_players()
+    if not number_of_players:
+        setup_computer_player()
     game_is_playing = True
     while game_is_playing:
         display_board(missed_letters, correct_letters, secret_word)
         # Let the player enter a letter.
-        guess = get_guess(missed_letters + correct_letters)
+        if number_of_players:
+            guess = get_player_guess(missed_letters + correct_letters)
+        else:  # This should be changed for the computer player once the code is written
+            guess = get_player_guess(missed_letters + correct_letters)
         if guess in secret_word:
             correct_letters += guess
             # Check if the player has won.
