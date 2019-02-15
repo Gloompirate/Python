@@ -3,6 +3,7 @@
 import random
 import time
 
+
 def draw_board(board):
     """Prints out the current board, ignores index 0."""
     print(board[7] + "|" + board[8] + "|" + board[9])
@@ -10,6 +11,7 @@ def draw_board(board):
     print(board[4] + "|" + board[5] + "|" + board[6])
     print("-|-|-")
     print(board[1] + "|" + board[2] + "|" + board[3])
+
 
 def input_player_letter():
     """Lets the player type which letter they want to be.
@@ -23,6 +25,7 @@ def input_player_letter():
         return ['X', 'O']
     return ['O', 'X']
 
+
 def get_number_of_players():
     """Asks the user how many players there are, 0 is computer vs computer,
     1 is player vs computer, 2 is player vs player."""
@@ -31,6 +34,7 @@ def get_number_of_players():
         print('Enter number of players (0,1,2)')
         number = int(input())
     return number
+
 
 def who_goes_first(number_of_players):
     """Randomly choose which player goes first."""
@@ -46,9 +50,11 @@ def who_goes_first(number_of_players):
         return 'player 1'
     return 'player 2'
 
+
 def make_move(board, letter, move):
     """Updates the board with the provided move."""
     board[move] = letter
+
 
 def is_winner(board, letter):
     """Given a board and a player's letter, this function returns True if that player has won."""
@@ -59,14 +65,17 @@ def is_winner(board, letter):
             return True
     return False
 
+
 def get_board_copy(board):
     """Make a copy of the board list and return it."""
     board_copy = board.copy()
     return board_copy
 
+
 def is_space_free(board, move):
     """Return True if the passed move is free on the passed board."""
     return board[move] == ' '
+
 
 def get_player_move(board):
     """Let the player enter their move."""
@@ -75,6 +84,7 @@ def get_player_move(board):
         print('What is your next move? (1-9)')
         move = int(input())
     return move
+
 
 def choose_random_move_from_list(board, moves_list):
     """Returns a valid move from the passed list on the passed board.
@@ -86,6 +96,7 @@ def choose_random_move_from_list(board, moves_list):
     if possible_moves:
         return random.choice(possible_moves)
     return None
+
 
 def get_computer_move(board, computer_letter):
     """Given a board and the computer's letter, determine where to move and return that move."""
@@ -118,12 +129,14 @@ def get_computer_move(board, computer_letter):
     # Move on one of the sides.
     return choose_random_move_from_list(board, [2, 4, 6, 8])
 
+
 def is_board_full(board):
     """Return True if every space on the board has been taken. Otherwise, return False."""
     for i in range(1, 10):
         if is_space_free(board, i):
             return False
     return True
+
 
 def do_turn(player, letter, board):
     """Return True is the games continues, return False if it has ended"""
@@ -143,11 +156,12 @@ def do_turn(player, letter, board):
     time.sleep(0.2)
     return True
 
+
 print("Welcome")
 
 while True:
     # Reset the board.
-    THE_BOARD = [' '] * 10
+    the_board = [' '] * 10
     NUMBER_OF_PLAYERS = get_number_of_players()
     if NUMBER_OF_PLAYERS == 0:
         COMPUTER_ONE_LETTER, COMPUTER_TWO_LETTER = ['X', 'O']
@@ -155,50 +169,50 @@ while True:
         PLAYER_ONE_LETTER, COMPUTER_ONE_LETTER = input_player_letter()
     if NUMBER_OF_PLAYERS == 2:
         PLAYER_ONE_LETTER, PLAYER_TWO_LETTER = ['X', 'O']
-    TURN = who_goes_first(NUMBER_OF_PLAYERS)
-    print('The ' + TURN + ' will go first.')
-    GAME_IS_PLAYING = True
-    draw_board(THE_BOARD)
-    while GAME_IS_PLAYING:
-        if TURN == 'player':
+    turn = who_goes_first(NUMBER_OF_PLAYERS)
+    print('The ' + turn + ' will go first.')
+    game_is_playing = True
+    draw_board(the_board)
+    while game_is_playing:
+        if turn == 'player':
             # Player's turn, this only happens in one player games
-            GAME_IS_PLAYING = do_turn('Player', PLAYER_ONE_LETTER, THE_BOARD)
-            if not GAME_IS_PLAYING:
+            game_is_playing = do_turn('Player', PLAYER_ONE_LETTER, the_board)
+            if not game_is_playing:
                 break
-            TURN = 'computer'
-        if TURN == 'computer':
+            turn = 'computer'
+        if turn == 'computer':
             # Computer's turn, this only happens in one player games
-            GAME_IS_PLAYING = do_turn('Computer', COMPUTER_ONE_LETTER, THE_BOARD)
-            if not GAME_IS_PLAYING:
+            game_is_playing = do_turn('Computer', COMPUTER_ONE_LETTER, the_board)
+            if not game_is_playing:
                 break
-            TURN = 'player'
-        if TURN == 'player 1':
+            turn = 'player'
+        if turn == 'player 1':
             # Player 1's turn, this only happens in two player games
-            GAME_IS_PLAYING = do_turn('Player 1', PLAYER_ONE_LETTER, THE_BOARD)
-            if not GAME_IS_PLAYING:
+            game_is_playing = do_turn('Player 1', PLAYER_ONE_LETTER, the_board)
+            if not game_is_playing:
                 break
-            TURN = 'player 2'
-        if TURN == 'player 2':
+            turn = 'player 2'
+        if turn == 'player 2':
             # Player 2's turn, this only happens in two player games
-            GAME_IS_PLAYING = do_turn('Player 2', PLAYER_TWO_LETTER, THE_BOARD)
-            if not GAME_IS_PLAYING:
+            game_is_playing = do_turn('Player 2', PLAYER_TWO_LETTER, the_board)
+            if not game_is_playing:
                 break
-            TURN = 'player 1'
-        if TURN == 'computer 1':
+            turn = 'player 1'
+        if turn == 'computer 1':
             # Computer's turn this only happens in 0 player games
-            GAME_IS_PLAYING = do_turn('Computer 1', COMPUTER_ONE_LETTER, THE_BOARD)
-            if not GAME_IS_PLAYING:
+            game_is_playing = do_turn('Computer 1', COMPUTER_ONE_LETTER, the_board)
+            if not game_is_playing:
                 break
-            TURN = 'computer 2'
-        if TURN == 'computer 2':
+            turn = 'computer 2'
+        if turn == 'computer 2':
             # Computer's turn this only happens in 0 player games
-            GAME_IS_PLAYING = do_turn('Computer 2', COMPUTER_TWO_LETTER, THE_BOARD)
-            if not GAME_IS_PLAYING:
+            game_is_playing = do_turn('Computer 2', COMPUTER_TWO_LETTER, the_board)
+            if not game_is_playing:
                 break
-            TURN = 'computer 1'
-    ANSWER = ''
-    while ANSWER not in ('YES', 'NO', 'Y', 'N'):
+            turn = 'computer 1'
+    answer = ''
+    while answer not in ('YES', 'NO', 'Y', 'N'):
         print('Do you want to play again? (yes or no)')
-        ANSWER = input().upper()
-    if ANSWER.startswith('N'):
+        answer = input().upper()
+    if answer.startswith('N'):
         break
