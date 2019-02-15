@@ -39,12 +39,12 @@ HANGMAN_PICS = ['''
  / \  |
      ===''']
 
-words = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split()
+WORD_LIST = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split()
 
 
-def get_random_word(word_list):
+def get_random_word():
     """Returns a random word from the list provided."""
-    return random.choice(word_list)
+    return random.choice(WORD_LIST)
 
 
 def display_board(missed_letters, correct_letters, secret_word):
@@ -84,7 +84,7 @@ print('H A N G M A N')
 while True:
     missed_letters = ''
     correct_letters = ''
-    secret_word = get_random_word(words)
+    secret_word = get_random_word()
     game_is_playing = True
     while game_is_playing:
         display_board(missed_letters, correct_letters, secret_word)
