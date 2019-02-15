@@ -91,22 +91,22 @@ while True:
         # Let the player enter a letter.
         guess = get_guess(missed_letters + correct_letters)
         if guess in secret_word:
-            correct_letters = correct_letters + guess
+            correct_letters += guess
             # Check if the player has won.
-            foundAllLetters = True
+            found_all_letters = True
             for i in range(len(secret_word)):
                 if secret_word[i] not in correct_letters:
-                    foundAllLetters = False
+                    found_all_letters = False
                     break
-            if foundAllLetters:
-                print('Yes! The secret word is "' + secret_word + '" You have won!')
+            if found_all_letters:
+                print('Yes! The secret word is: ' + secret_word + '\nYou have won!')
                 game_is_playing = False
         else:
-            missed_letters = missed_letters + guess
+            missed_letters += guess
             # Check if player has guessed too many times and lost.
             if len(missed_letters) == len(HANGMAN_PICS) - 1:
                 display_board(missed_letters, correct_letters, secret_word)
-                print('You have run out of guesses!\nAfter ' + str(len(missed_letters)) + ' missed guesses and ' + str(len(correct_letters)) + ' correct guesses, word was "' + secret_word + '"')
+                print('You have run out of guesses, the word was: ' + secret_word)
                 game_is_playing = False
     # Ask the player if they want to play again (but only if the game is over)
     answer = ''
