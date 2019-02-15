@@ -12,6 +12,7 @@ def make_dictionary():
 
 
 def frequency_analysis(word_list):
+    """Find how often each letter is used in the word_list provided, and return a list of letters ordered by frequency decending"""
     frequency = {}
     for word in word_list:
         for letter in word:
@@ -19,7 +20,8 @@ def frequency_analysis(word_list):
                 frequency[letter] = 1
             else:
                 frequency[letter] += 1
-    return frequency
+    # return frequency
+    return [k for k in sorted(frequency, key=frequency.get, reverse=True)]
 
 
 def remove_words_by_letter(letter, word_list):
@@ -33,6 +35,7 @@ def remove_words_by_letter(letter, word_list):
 
 
 dictionary = make_dictionary()
-# freq = frequency_analysis(dictionary[3])
-print(dictionary[3])
-print(remove_words_by_letter('a', dictionary[3]))
+freq = frequency_analysis(dictionary[3])
+print(freq)
+# print(dictionary[3])
+# print(remove_words_by_letter('a', dictionary[3]))
