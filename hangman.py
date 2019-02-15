@@ -1,6 +1,7 @@
 """hangman.py"""
 
 import random
+import time
 
 HANGMAN_PICS = ['''
   +---+
@@ -90,6 +91,69 @@ def get_number_of_players():
     return number
 
 
+def make_dictionary():
+    dictionary = {}
+    for word in WORD_LIST:
+        if len(word) not in dictionary:
+            dictionary[len(word)] = [word]
+        else:
+            dictionary[len(word)].append(word)
+    return dictionary
+
+
+def frequency_analysis(word_list):
+    """Find how often each letter is used in the word_list provided,
+    and return a list of letters ordered by frequency decending"""
+    frequency = {}
+    for word in word_list:
+        for letter in word:
+            if letter not in frequency:
+                frequency[letter] = 1
+            else:
+                frequency[letter] += 1
+    return [k for k in sorted(frequency, key=frequency.get, reverse=True)]
+
+
+def remove_words_by_letter(letter, word_list):
+    words_to_remove = []
+    for word in word_list:
+        if letter in word:
+            words_to_remove.append(word)
+    return [x for x in word_list if x not in words_to_remove]
+
+
+def make_sequence(letters):
+    sequence = {}
+    for position, letter in enumerate(letters):
+        if letter != '_':
+            sequence[position] = letter
+    return sequence
+
+
+def remove_words_by_sequence(sequence, word_list):
+    """Given a dictionary of the letters and their posistions check the words in the word list
+    and return only the ones that match all the positions."""
+    words_to_remove = []
+    for word in word_list:
+        for i, (key, value) in enumerate(sequence.items()):
+            if value != word[key]:
+                words_to_remove.append(word)
+    return [x for x in word_list if x not in words_to_remove]
+
+
+def get_computer_guess(missed, correct, blanks, words):
+    for letter in missed:
+        words = remove_words_by_letter(letter, words)
+    sequence = make_sequence(blanks)
+    words = remove_words_by_sequence(sequence, words)
+    freq = frequency_analysis(words)
+    for character in (missed + correct):
+        if character in freq:
+            freq.remove(character)
+    time.sleep(1)
+    return freq[0]
+
+
 print('H A N G M A N')
 
 while True:
@@ -98,6 +162,9 @@ while True:
     secret_word = get_random_word()
     blanks = '_' * len(secret_word)
     number_of_players = get_number_of_players()
+    if not number_of_players:
+        dictionary = make_dictionary()
+        words_left = dictionary[len(secret_word)]
     game_is_playing = True
     while game_is_playing:
         blanks = display_board(missed_letters, correct_letters, secret_word, blanks)
@@ -105,7 +172,7 @@ while True:
         if number_of_players:
             guess = get_player_guess(missed_letters + correct_letters)
         else:  # This should be changed for the computer player once the code is written
-            guess = get_player_guess(missed_letters + correct_letters)
+            guess = get_computer_guess(missed_letters, correct_letters, blanks, words_left)
         if guess in secret_word:
             correct_letters += guess
             # Check if the player has won.
