@@ -12,7 +12,8 @@ def make_dictionary():
 
 
 def frequency_analysis(word_list):
-    """Find how often each letter is used in the word_list provided, and return a list of letters ordered by frequency decending"""
+    """Find how often each letter is used in the word_list provided,
+    and return a list of letters ordered by frequency decending"""
     frequency = {}
     for word in word_list:
         for letter in word:
@@ -31,8 +32,27 @@ def remove_words_by_letter(letter, word_list):
     return [x for x in word_list if x not in words_to_remove]
 
 
+def remove_words_by_sequence(sequence, word_list):
+    """Given a dictionary of the letters and their posistions check the words in the word list
+    and return only the ones that match all the positions."""
+    words_to_remove = []
+    for word in word_list:
+        for i, (key, value) in enumerate(sequence.items()):
+            if value != word[key]:
+                words_to_remove.append(word)
+    return [x for x in word_list if x not in words_to_remove]
+
+
+def make_sequence(letters):
+    sequence = {}
+    for position, letter in enumerate(letters):
+        if letter != '_':
+            sequence[position] = letter
+    return sequence
+
+
 dictionary = make_dictionary()
-freq = frequency_analysis(dictionary[3])
-print(freq)
-# print(dictionary[3])
-# print(remove_words_by_letter('a', dictionary[3]))
+words_left = remove_words_by_letter('a', dictionary[3])
+current_letters = make_sequence("_o_")
+words_left = remove_words_by_sequence(current_letters, words_left)
+print(words_left)
