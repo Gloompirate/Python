@@ -162,51 +162,51 @@ print("Welcome")
 while True:
     # Reset the board.
     the_board = [' '] * 10
-    NUMBER_OF_PLAYERS = get_number_of_players()
-    if NUMBER_OF_PLAYERS == 0:
-        COMPUTER_ONE_LETTER, COMPUTER_TWO_LETTER = ['X', 'O']
-    if NUMBER_OF_PLAYERS == 1:
-        PLAYER_ONE_LETTER, COMPUTER_ONE_LETTER = input_player_letter()
-    if NUMBER_OF_PLAYERS == 2:
-        PLAYER_ONE_LETTER, PLAYER_TWO_LETTER = ['X', 'O']
-    turn = who_goes_first(NUMBER_OF_PLAYERS)
+    number_of_players = get_number_of_players()
+    if number_of_players == 0:
+        computer_one_letter, computer_two_letter = ['X', 'O']
+    if number_of_players == 1:
+        player_one_later, computer_one_letter = input_player_letter()
+    if number_of_players == 2:
+        player_one_later, player_two_letter = ['X', 'O']
+    turn = who_goes_first(number_of_players)
     print('The ' + turn + ' will go first.')
     game_is_playing = True
     draw_board(the_board)
     while game_is_playing:
         if turn == 'player':
             # Player's turn, this only happens in one player games
-            game_is_playing = do_turn('Player', PLAYER_ONE_LETTER, the_board)
+            game_is_playing = do_turn('Player', player_one_later, the_board)
             if not game_is_playing:
                 break
             turn = 'computer'
         if turn == 'computer':
             # Computer's turn, this only happens in one player games
-            game_is_playing = do_turn('Computer', COMPUTER_ONE_LETTER, the_board)
+            game_is_playing = do_turn('Computer', computer_one_letter, the_board)
             if not game_is_playing:
                 break
             turn = 'player'
         if turn == 'player 1':
             # Player 1's turn, this only happens in two player games
-            game_is_playing = do_turn('Player 1', PLAYER_ONE_LETTER, the_board)
+            game_is_playing = do_turn('Player 1', player_one_later, the_board)
             if not game_is_playing:
                 break
             turn = 'player 2'
         if turn == 'player 2':
             # Player 2's turn, this only happens in two player games
-            game_is_playing = do_turn('Player 2', PLAYER_TWO_LETTER, the_board)
+            game_is_playing = do_turn('Player 2', player_two_letter, the_board)
             if not game_is_playing:
                 break
             turn = 'player 1'
         if turn == 'computer 1':
             # Computer's turn this only happens in 0 player games
-            game_is_playing = do_turn('Computer 1', COMPUTER_ONE_LETTER, the_board)
+            game_is_playing = do_turn('Computer 1', computer_one_letter, the_board)
             if not game_is_playing:
                 break
             turn = 'computer 2'
         if turn == 'computer 2':
             # Computer's turn this only happens in 0 player games
-            game_is_playing = do_turn('Computer 2', COMPUTER_TWO_LETTER, the_board)
+            game_is_playing = do_turn('Computer 2', computer_two_letter, the_board)
             if not game_is_playing:
                 break
             turn = 'computer 1'
