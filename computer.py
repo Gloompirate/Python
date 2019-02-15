@@ -20,7 +20,6 @@ def frequency_analysis(word_list):
                 frequency[letter] = 1
             else:
                 frequency[letter] += 1
-    # return frequency
     return [k for k in sorted(frequency, key=frequency.get, reverse=True)]
 
 
@@ -29,8 +28,6 @@ def remove_words_by_letter(letter, word_list):
     for word in word_list:
         if letter in word:
             words_to_remove.append(word)
-    # return list(set(word_list) - set(words_to_remove))
-    # return list(filter(lambda x: x not in words_to_remove, word_list))
     return [x for x in word_list if x not in words_to_remove]
 
 
