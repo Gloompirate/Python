@@ -57,7 +57,6 @@ def display_board(missed_letters, correct_letters, secret_word, blanks):
     """Displays the current gameboard. Returns the current state of play."""
     print(HANGMAN_PICS[len(missed_letters)])
     print('\nMissed letters: ' + ' '.join(missed_letters))
-    # blanks = '_' * len(secret_word)
     for i in range(len(secret_word)):  # Replace blanks with correctly guessed letters.
         if secret_word[i] in correct_letters:
             blanks = blanks[:i] + secret_word[i] + blanks[i + 1:]
